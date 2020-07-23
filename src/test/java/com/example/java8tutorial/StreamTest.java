@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -48,4 +49,38 @@ public class StreamTest {
         String concat = streamEmpty.collect(StringBuilder::new, StringBuilder::append,StringBuilder::append).toString();
     }
 //    public Stream<String>
+
+
+
+    @Test
+    void createStream() {
+        List<String> words = Arrays.asList("pen", "coin", "desk", "chair");
+        String word = words.stream().findFirst().get();
+        System.out.println(word);
+        Stream<String> letters = Arrays.stream(new String[]{"a", "b", "c", "d"});
+        System.out.printf("There are %d letters%n", letters.count());
+        String day = "Sunday";
+        IntStream isStr = day.codePoints();
+//        List<Integer> list = isStr.boxed().collect(Collectors.toList());
+//        for (Integer x: list
+//             ) {
+//            if (x == 'n'){
+//                System.out.println(x);
+//            }
+//        }
+//        isStr.forEach(System.out::println);
+        String s = isStr.filter(e -> e != 'n').collect(StringBuilder::new,
+                StringBuilder::appendCodePoint, StringBuilder::append).toString();
+        System.out.println(s);
+        StringBuilder sb = new StringBuilder();
+        sb.append(1);
+        sb.append(1);
+        sb.append(22.022);
+        sb.append(1);
+        sb.append('s');
+        System.out.println(sb.toString());
+
+    }
+
+
 }
