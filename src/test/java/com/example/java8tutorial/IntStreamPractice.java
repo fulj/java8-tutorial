@@ -138,5 +138,30 @@ public class IntStreamPractice {
      * https://segmentfault.com/q/1010000004681887
      * 简单来比喻的话，peek就是管道的其中一节，后面还可以继续接管道、过滤器、阀门等等，forEach就是水龙头，是最终消费了流了，用了forEach就不能接上其他东西了。
      * 总结：peek接收一个没有返回值的λ表达式，可以做一些输出，外部处理等。map接收一个有返回值的λ表达式，之后Stream的泛型类型将转换为map参数λ表达式返回的类型
+     * java1.8--OptionalInt,OptionalDouble,OptionalLong类 https://blog.csdn.net/u011794238/article/details/49532717
      */
+
+    @Test
+    public void test14() throws Exception {
+        IntStream intStream = IntStream.of(6, 1, 1, 2, 5, 2, 3, 4);
+
+        //onClose方法的返回值是一个新的流，可以连续调用onClose，注册多个回调方法
+        intStream.onClose(()->{
+            System.out.println("intStream isClosed one ");
+        }).onClose(()->{
+            System.out.println("intStream isClosed two");
+        }).onClose(()->{
+            System.out.println("intStream isClosed three");
+        });
+
+        //触发onClose方法注册的多个回调方法的执行,并关闭流
+        intStream.close();
+        //流已关闭，不能执行流处理动作，forEach执行完成也会关闭流但是不会触发onClose方法的执行
+//        intStream.forEach(x->{
+//            System.out.println(x);
+//        });
+        System.out.println("main end");
+    }
+
+
 }
